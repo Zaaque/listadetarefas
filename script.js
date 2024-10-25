@@ -55,6 +55,8 @@ function renderTasks() {
         li.textContent = task.completed ? `${task.name} (Concluída)` : task.name;
         if (!task.completed) {
             li.onclick = () => completeTask(index);
+        } else {
+            li.classList.add('completed');
         }
         taskList.appendChild(li);
     });
