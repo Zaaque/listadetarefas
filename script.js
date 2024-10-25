@@ -45,6 +45,13 @@ function updateLevel() {
         level++;
         alert(`Você subiu de nível! Agora está no nível ${level}. Seu prêmio: ${rewards[level - 1] || 'nenhum prêmio mais!'}`);
     }
+    updateXpBar();
+}
+
+function updateXpBar() {
+    const xpToNextLevel = (level + 1) * 50;
+    const progress = Math.min((xp / xpToNextLevel) * 100, 100);
+    document.getElementById('xp-bar').style.width = `${progress}%`;
 }
 
 function renderTasks() {
@@ -60,9 +67,9 @@ function renderTasks() {
         }
         taskList.appendChild(li);
     });
-    document.getElementById('xp-info').innerText = `XP: ${xp}`;
     document.getElementById('level-info').innerText = `Nível: ${level}`;
     document.getElementById('reward-info').innerText = `Prêmio: ${rewards[level - 1] || 'nenhum prêmio'}`;
+    updateXpBar(); // Atualiza a barra de XP após renderizar as tarefas
 }
 
 function saveUserData() {
@@ -76,4 +83,5 @@ function loadUserData() {
     xp = parseInt(localStorage.getItem('xp')) || 0;
     level = parseInt(localStorage.getItem('level')) || 0;
     renderTasks();
+    updateXpBar(); // Atualiza a barra de XP ao carregar os dados
 }
