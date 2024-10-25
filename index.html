@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tarefas</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <div id="login-section">
+        <h1>Login</h1>
+        <input type="text" id="username" placeholder="Usuário">
+        <input type="password" id="password" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
+        <p id="login-message"></p>
+    </div>
+    
+    <div id="task-section" style="display:none;">
         <h1>Lista de Tarefas</h1>
-        <input type="text" id="taskInput" placeholder="Digite uma nova tarefa">
+        <input type="text" id="task-input" placeholder="Nova tarefa">
         <button onclick="addTask()">Adicionar Tarefa</button>
         
-        <ul id="taskList"></ul>
-
-        <div class="progress-container">
-            <label>XP: <span id="xpDisplay">0</span></label>
-            <progress id="xpBar" value="0" max="1000"></progress>
-        </div>
-
-        <h2 id="levelDisplay">Nível: 1</h2>
-        <h3 id="prizeDisplay">Prêmio: Beijo de Momo</h3>
+        <ul id="task-list"></ul>
+        <p id="xp-info"></p>
+        <p id="level-info"></p>
+        <p id="reward-info"></p>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
