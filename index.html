@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+        <input type="text" id="taskInput" placeholder="Digite uma nova tarefa">
+        <button onclick="addTask()">Adicionar Tarefa</button>
+        
+        <ul id="taskList"></ul>
+
+        <div class="progress-container">
+            <label>XP: <span id="xpDisplay">0</span></label>
+            <progress id="xpBar" value="0" max="1000"></progress>
+        </div>
+
+        <h2 id="levelDisplay">Nível: 1</h2>
+        <h3 id="prizeDisplay">Prêmio: Beijo de Momo</h3>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
