@@ -34,9 +34,19 @@ function completeTask(index) {
         tasks[index].completed = true;
         xp += 10;
         updateLevel();
+        updateXpBar();
         saveUserData();
         renderTasks();
     }
+}
+
+function resetTasks() {
+    tasks = [];
+    xp = 0;
+    level = 0;
+    saveUserData();
+    updateXpBar();
+    renderTasks();
 }
 
 function updateLevel() {
@@ -45,13 +55,16 @@ function updateLevel() {
         level++;
         alert(`Você subiu de nível! Agora está no nível ${level}. Seu prêmio: ${rewards[level - 1] || 'nenhum prêmio mais!'}`);
     }
-    updateXpBar();
 }
 
 function updateXpBar() {
+    const xpBar = document.getElementById('xp-bar');
     const xpToNextLevel = (level + 1) * 50;
     const progress = Math.min((xp / xpToNextLevel) * 100, 100);
-    document.getElementById('xp-bar').style.width = `${progress}%`;
+    xpBar.style.width = `${progress}%`;
+    document.getElementById('xp-info').innerText = `XP: ${xp} / ${xpToNextLevel}`;
+    document.getElementById('level-info').innerText = `Nível: ${level}`;
+    document.getElementById('reward-info').innerText = `Prêmio: ${rewards[level - 1] || 'nenhum prêmio'}`;
 }
 
 function renderTasks() {
@@ -61,15 +74,14 @@ function renderTasks() {
         const li = document.createElement('li');
         li.textContent = task.completed ? `${task.name} (Concluída)` : task.name;
         if (!task.completed) {
-            li.onclick = () => completeTask(index);
-        } else {
-            li.classList.add('completed');
+            const completeButton = document.createElement('span');
+            completeButton.innerText = '✓';
+            completeButton.onclick = () => completeTask(index);
+            li.appendChild(completeButton);
         }
         taskList.appendChild(li);
     });
-    document.getElementById('level-info').innerText = `Nível: ${level}`;
-    document.getElementById('reward-info').innerText = `Prêmio: ${rewards[level - 1] || 'nenhum prêmio'}`;
-    updateXpBar(); // Atualiza a barra de XP após renderizar as tarefas
+    updateXpBar();
 }
 
 function saveUserData() {
@@ -82,6 +94,6 @@ function loadUserData() {
     tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     xp = parseInt(localStorage.getItem('xp')) || 0;
     level = parseInt(localStorage.getItem('level')) || 0;
+    updateXpBar();
     renderTasks();
-    updateXpBar(); // Atualiza a barra de XP ao carregar os dados
 }
