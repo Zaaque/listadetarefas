@@ -9,8 +9,6 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
-            background-color: #e7f3fe;
-            color: #333;
         }
         .task-list {
             max-width: 300px;
@@ -20,23 +18,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
+            padding: 5px 10px;
             margin: 5px 0;
-            background-color: #cce5ff;
+            background-color: #f1f1f1;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         button {
             cursor: pointer;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
         }
         .xp-bar-container {
             width: 80%;
@@ -62,7 +50,7 @@
     <p id="reward"></p>
 
     <input type="text" id="newTask" placeholder="Nova tarefa">
-    <button id="addTaskButton">Adicionar Tarefa</button>
+    <button onclick="addTask()">Adicionar Tarefa</button>
 
     <div class="task-list" id="taskList"></div>
 
@@ -107,7 +95,7 @@
         function updateXpBar() {
             const xpForNextLevel = level * 200;
             const progress = (xp % xpForNextLevel) / xpForNextLevel * 100;
-            xpBar.style.width = progress + "%";
+            xpBar.style.width = `${progress}%`;
         }
 
         function completeTask(button) {
@@ -159,9 +147,6 @@
 
         // Carregar o progresso salvo ao iniciar
         loadProgress();
-
-        // Adicionar evento ao botão
-        document.getElementById("addTaskButton").addEventListener("click", addTask);
     </script>
 </body>
 </html>
