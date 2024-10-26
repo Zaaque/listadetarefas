@@ -62,7 +62,7 @@
     <p id="reward"></p>
 
     <input type="text" id="newTask" placeholder="Nova tarefa">
-    <button onclick="addTask()">Adicionar Tarefa</button>
+    <button id="addTaskButton">Adicionar Tarefa</button>
 
     <div class="task-list" id="taskList"></div>
 
@@ -98,4 +98,70 @@
             localStorage.setItem("level", level);
             const tasks = Array.from(document.querySelectorAll(".task"));
             const taskData = tasks.map(task => ({
-                text: task.querySelector("s
+                text: task.querySelector("span").textContent,
+                completed: task.querySelector("button").disabled
+            }));
+            localStorage.setItem("tasks", JSON.stringify(taskData));
+        }
+
+        function updateXpBar() {
+            const xpForNextLevel = level * 200;
+            const progress = (xp % xpForNextLevel) / xpForNextLevel * 100;
+            xpBar.style.width = progress + "%";
+        }
+
+        function completeTask(button) {
+            button.disabled = true;
+            button.textContent = "Concluída";
+
+            xp += 10;
+            document.getElementById("xp").textContent = xp;
+            updateXpBar();
+
+            const xpForNextLevel = level * 200;
+            if (xp >= xpForNextLevel) {
+                level++;
+                document.getElementById("level").textContent = level;
+                const reward = rewards[level - 2] || "Prêmio especial!";
+                document.getElementById("reward").textContent = `Parabéns! Você ganhou: ${reward}`;
+                updateXpBar();
+            }
+
+            saveProgress();
+        }
+
+        function addTask() {
+            const taskText = document.getElementById("newTask").value.trim();
+            if (taskText === "") return;
+
+            addTaskToList(taskText, false);
+            document.getElementById("newTask").value = "";
+            saveProgress();
+        }
+
+        function addTaskToList(text, completed) {
+            const taskList = document.getElementById("taskList");
+            const taskDiv = document.createElement("div");
+            taskDiv.classList.add("task");
+
+            const taskName = document.createElement("span");
+            taskName.textContent = text;
+
+            const completeButton = document.createElement("button");
+            completeButton.textContent = completed ? "Concluída" : "Concluir";
+            completeButton.disabled = completed;
+            completeButton.onclick = function() { completeTask(completeButton); };
+
+            taskDiv.appendChild(taskName);
+            taskDiv.appendChild(completeButton);
+            taskList.appendChild(taskDiv);
+        }
+
+        // Carregar o progresso salvo ao iniciar
+        loadProgress();
+
+        // Adicionar evento ao botão
+        document.getElementById("addTaskButton").addEventListener("click", addTask);
+    </script>
+</body>
+</html>
